@@ -86,17 +86,17 @@ function sortString(string) {
                         else { //if the unsorted number is larger than sorted number 
                             if (j == sortedString.length - 1) { // if the sorted number is the last number in the string add the unsorted number after it
                                 sortedString += unsortedNumberBuffer + " ";
-                                unsortedNumberBuffer = "";
+                                unsortedNumberBuffer = ""; // empty buffer
                                 break;
                             }
-                            sortedNumberBuffer = "";
+                            sortedNumberBuffer = ""; // empty buffer
                         }
                     }
                 }
             }
         }
     }
-    return sortedString;
+    return sortedString; //return sorted string
 }
 
 function generateString(n, min, max) {
