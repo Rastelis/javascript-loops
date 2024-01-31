@@ -65,13 +65,12 @@ function sortString(string) {
             }
             else { // otherwise sort it 
                 let sortedNumberBuffer = ""; // buffer for saving number from sorted number string 
-                let sortedStringLastCheckedIndex = 0; // integer for saving index of sorted number string. the index show position of last sorted number that was smaller than unsorted number 
                 for (let j = 0; j < sortedString.length; j++) { // loop for sorting numbers in sorted string 
                     if (sortedString[j] != " ") { // read the number from sorted string, stop reading if there is empty space
                         sortedNumberBuffer += sortedString[j]; // if there is no empty space then add the char to the sorted number buffer for checking with unsorted number
                     }
                     else { // if there is space in the string check last sorted number with unsorted number,
-                        if (parseInt(unsortedNumberBuffer) < parseInt(sortedNumberBuffer) && sortedStringLastCheckedIndex === 0) { // if unsorted number is smaller than sorted number and the sorted number is the first number in the string add the unsorted number at the begining of the string
+                        if (parseInt(unsortedNumberBuffer) < parseInt(sortedNumberBuffer) && j - sortedNumberBuffer.length === 0) { // if unsorted number is smaller than sorted number and the sorted number is the first number in the string add the unsorted number at the begining of the string(that is current index of sorted string minus the lenght of last number read from sorted string  )
                             let temp = sortedString
                             sortedString = unsortedNumberBuffer + " " + temp;
                             unsortedNumberBuffer = ""; // empty buffer
@@ -79,8 +78,8 @@ function sortString(string) {
 
                         }
                         else if (parseInt(unsortedNumberBuffer) < parseInt(sortedNumberBuffer)) { // if unsorted number is smaller than the sorted number but the sorted number is not the first number in the string. add the unsorted number before the sorted number
-                            let temp = sortedString.slice(sortedStringLastCheckedIndex) // slice sorted string at the position of last smaller number
-                            sortedString = sortedString.slice(0, sortedStringLastCheckedIndex) + " " + unsortedNumberBuffer + temp; // save the unsorted number in betwean of smaler and bigger numbers
+                            let temp = sortedString.slice(j - sortedNumberBuffer.length -1) // slice sorted string at the previous empty space (that is current sorted string index minus the lenght of last number read from sorted string -1 to position to the empty space)
+                            sortedString = sortedString.slice(0, j - sortedNumberBuffer.length -1) + " " + unsortedNumberBuffer + temp; // save the unsorted number in between of smaler and bigger numbers
                             unsortedNumberBuffer = "";// empty buffer
                             break;
                         }
@@ -90,7 +89,6 @@ function sortString(string) {
                                 unsortedNumberBuffer = "";
                                 break;
                             }
-                            sortedStringLastCheckedIndex = j;
                             sortedNumberBuffer = "";
                         }
                     }
